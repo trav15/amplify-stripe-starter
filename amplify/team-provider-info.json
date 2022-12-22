@@ -19,7 +19,8 @@
       "function": {
         "fetchStripeSessionURL": {
           "deploymentBucketName": "amplify-amplifystripestarter-dev-141023-deployment",
-          "s3Key": "amplify-builds/fetchStripeSessionURL-784d39393072375a676b-build.zip"
+          "s3Key": "amplify-builds/fetchStripeSessionURL-784d39393072375a676b-build.zip",
+          "secretsPathAmplifyAppId": "d1s9p7abt3mq6"
         },
         "stripeWebhooks": {
           "deploymentBucketName": "amplify-amplifystripestarter-dev-141023-deployment",

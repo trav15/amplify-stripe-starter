@@ -67,7 +67,16 @@
     "fetchStripeSessionURL": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda"
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "amplifystripestarter",
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ]
+        }
+      ]
     },
     "stripeWebhooks": {
       "build": true,

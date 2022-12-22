@@ -15,6 +15,13 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "apiamplifystripestarterGraphQLAPIIdOutput": {
+      "Type": "String",
+      "Default": "apiamplifystripestarterGraphQLAPIIdOutput"
+    },
+    "secretsPathAmplifyAppId": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -69,6 +76,57 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "API_AMPLIFYSTRIPESTARTER_PRODUCTTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apiamplifystripestarterGraphQLAPIIdOutput}:GetAtt:ProductTable:Name"
+              }
+            },
+            "API_AMPLIFYSTRIPESTARTER_PRODUCTTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apiamplifystripestarterGraphQLAPIIdOutput}:GetAtt:ProductTable:Name"
+                    }
+                  }
+                ]
+              ]
+            },
+            "API_AMPLIFYSTRIPESTARTER_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apiamplifystripestarterGraphQLAPIIdOutput"
+            },
+            "STRIPE_SECRET_KEY": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Sub": [
+                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                      {
+                        "appId": {
+                          "Ref": "secretsPathAmplifyAppId"
+                        },
+                        "env": {
+                          "Ref": "env"
+                        },
+                        "functionName": "fetchStripeSessionURL"
+                      }
+                    ]
+                  },
+                  "STRIPE_SECRET_KEY"
+                ]
+              ]
             }
           }
         },
@@ -164,6 +222,138 @@
           ]
         }
       }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apiamplifystripestarterGraphQLAPIIdOutput}:GetAtt:ProductTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apiamplifystripestarterGraphQLAPIIdOutput}:GetAtt:ProductTable:Name"
+                        }
+                      },
+                      "/index/*"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyFunctionSecretsPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-function-secrets-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ssm:GetParameter",
+                "ssm:GetParameters"
+              ],
+              "Resource": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:aws:ssm:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":parameter",
+                    {
+                      "Fn::Sub": [
+                        "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                        {
+                          "appId": {
+                            "Ref": "secretsPathAmplifyAppId"
+                          },
+                          "env": {
+                            "Ref": "env"
+                          },
+                          "functionName": "fetchStripeSessionURL"
+                        }
+                      ]
+                    },
+                    "*"
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ]
     }
   },
   "Outputs": {
