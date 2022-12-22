@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "amplifystripestarter",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authamplifystripestarter19dbafdb19dbafdb",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

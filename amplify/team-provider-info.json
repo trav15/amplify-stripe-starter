@@ -1,0 +1,37 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-amplifystripestarter-dev-141023-authRole",
+      "UnauthRoleArn": "arn:aws:iam::023612696016:role/amplify-amplifystripestarter-dev-141023-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::023612696016:role/amplify-amplifystripestarter-dev-141023-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-amplifystripestarter-dev-141023-deployment",
+      "UnauthRoleName": "amplify-amplifystripestarter-dev-141023-unauthRole",
+      "StackName": "amplify-amplifystripestarter-dev-141023",
+      "StackId": "arn:aws:cloudformation:us-east-1:023612696016:stack/amplify-amplifystripestarter-dev-141023/61615e70-8202-11ed-a970-0e87c0b09401",
+      "AmplifyAppId": "d1s9p7abt3mq6"
+    },
+    "categories": {
+      "auth": {
+        "amplifystripestarter19dbafdb19dbafdb": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "fetchStripeSessionURL": {
+          "deploymentBucketName": "amplify-amplifystripestarter-dev-141023-deployment",
+          "s3Key": "amplify-builds/fetchStripeSessionURL-784d39393072375a676b-build.zip"
+        },
+        "stripeWebhooks": {
+          "deploymentBucketName": "amplify-amplifystripestarter-dev-141023-deployment",
+          "s3Key": "amplify-builds/stripeWebhooks-4c78566b4154444f6545-build.zip"
+        }
+      },
+      "storage": {
+        "productImages": {}
+      },
+      "api": {
+        "amplifystripestarter": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+type Product
+    @model # automatically create a dynamoDB table for this type
+    @auth(
+        rules: [
+            { allow: groups, groups: ["admin"] } # uses cognito to allow CRUD access
+            { allow: public, provider: iam, operations: [read] } # guests can read only
+        ]
+    ) {
+    id: ID!
+    name: String!
+    description: String!
+    price: Int! # price is in cents (lowest currency value)
+    currency: CURRENCY_ENUM!
+    image: AWSURL # A valid URL string
+    product_data: MetaData!
+}
+
+type MetaData {
+    metadata: ProductData!
+}
+type ProductData {
+    productFileKey: String! # S3 protected "folder" key
+}
+
+enum CURRENCY_ENUM {
+    USD
+}
+
+# create an additional Query that takes in stringified JSON and returns a string
+# This can only be called by guest users of our application
+# When called, it will call the fetchStripeSessionURL Lambda function
+
+type Query {
+    fetchCheckoutURL(input: AWSJSON): String
+        @auth(rules: [{ allow: public, provider: iam }])
+        @function(name: "fetchStripeSessionURL-${env}")
+}

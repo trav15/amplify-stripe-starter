@@ -1,0 +1,20 @@
+{
+  "resourceName": "productImages",
+  "policyUUID": "135c5201",
+  "bucketName": "productkit",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "READ"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {
+    "admin": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ]
+  }
+}

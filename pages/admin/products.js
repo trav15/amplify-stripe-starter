@@ -71,4 +71,4 @@ function CreateProductsPage({ signOut, user }) {
 	)
 }
 
-export default CreateProductsPage
+export default withAuthenticator(CreateProductsPage, { hideSignUp: true })
