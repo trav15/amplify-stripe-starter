@@ -1,6 +1,6 @@
 [
   {
-    "Action": [],
-    "Resource": []
+      "Action": ["ses:SendRawEmail"],
+      "Resource": ["arn:aws:ses:us-east-1:*:identity/*"]
   }
 ]

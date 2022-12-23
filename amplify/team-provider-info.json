@@ -19,12 +19,14 @@
       "function": {
         "fetchStripeSessionURL": {
           "deploymentBucketName": "amplify-amplifystripestarter-dev-141023-deployment",
-          "s3Key": "amplify-builds/fetchStripeSessionURL-784d39393072375a676b-build.zip",
+          "s3Key": "amplify-builds/fetchStripeSessionURL-6e4b4a6a3353617a5175-build.zip",
           "secretsPathAmplifyAppId": "d1s9p7abt3mq6"
         },
         "stripeWebhooks": {
           "deploymentBucketName": "amplify-amplifystripestarter-dev-141023-deployment",
-          "s3Key": "amplify-builds/stripeWebhooks-4c78566b4154444f6545-build.zip"
+          "s3Key": "amplify-builds/stripeWebhooks-66796b4a697735497661-build.zip",
+          "secretsPathAmplifyAppId": "d1s9p7abt3mq6",
+          "s3UserIdentity": "us-east-1:c059f255-af0c-4bb5-9a58-0d0377d8555c\t"
         }
       },
       "storage": {

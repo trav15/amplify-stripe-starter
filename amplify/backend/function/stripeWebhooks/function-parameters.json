@@ -1,3 +1,20 @@
 {
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "permissions": {
+    "storage": {
+      "productImages": [
+        "read"
+      ]
+    }
+  },
+  "secretNames": [
+    "STRIPE_SECRET_KEY",
+    "STRIPE_WEBHOOK_SECRET"
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "s3UserIdentity",
+      "environmentVariableName": "S3_USER_IDENTITY"
+    }
+  ]
 }

@@ -4,7 +4,7 @@ import { Text, View } from '@aws-amplify/ui-react'
 
 function SuccessPage() {
 	const router = useRouter()
-	const { email = 'test@sample.com' } = router.query
+	const { email } = router.query
 
 	return (
 		<View>

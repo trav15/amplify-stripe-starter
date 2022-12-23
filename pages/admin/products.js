@@ -6,6 +6,8 @@ import {
 } from '@aws-amplify/ui-react'
 
 import React from 'react'
+import { API, Storage } from 'aws-amplify'
+import { createProduct } from '../../src/graphql/mutations'
 
 function CreateProductsPage({ signOut, user }) {
 	const handleSubmit = async (e) => {
@@ -18,6 +20,37 @@ function CreateProductsPage({ signOut, user }) {
 		const description = e.target.description.value
 
 		console.log({ name, price, displayImage, productFile, description })
+
+		const publicResult = await Storage.put(
+			`productimages/${displayImage.name}`,
+			displayImage,
+			{ level: 'public', contentType: displayImage.type }
+		)
+		
+		const protectedResult = await Storage.put(
+			`${productFile.name}`,
+			productFile,
+			{
+				level: 'protected',
+				contentType: productFile.type,
+			}
+		)
+		
+		await API.graphql({
+			query: createProduct,
+			variables: {
+				input: {
+					name,
+					price: price * 100,
+					currency: 'USD',
+					product_data: {
+						metadata: { productFileKey: protectedResult.key },
+					},
+					image: `https://productkit141023-dev.s3.amazonaws.com/public/productimages/${publicResult.key}`,
+					description,
+				},
+			},
+		})		
 	}
 	return (
 		<>
